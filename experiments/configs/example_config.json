@@ -1,0 +1,27 @@
+{
+  "experiment_name": "mnist_baseline",
+  "model": {
+    "type": "MLP",
+    "params": {
+      "input_dim": 784,
+      "hidden_dims": [256, 128],
+      "output_dim": 10,
+      "dropout": 0.2
+    }
+  },
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "lr": 0.001
+    }
+  },
+  "training": {
+    "epochs": 10,
+    "batch_size": 64,
+    "device": "cuda"
+  },
+  "dataset": {
+    "name": "mnist",
+    "normalize": true
+  }
+}
