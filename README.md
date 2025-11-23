@@ -1,32 +1,6 @@
 # Styx
 
-A modular Python framework for experimenting with gradient descent techniques in deep learning.
-
-## Features
-
-- **Modular Architecture**: Clean separation of models, optimizers, datasets, and experiments
-- **Custom Optimizers**: Easy-to-extend base optimizer class for implementing gradient descent variants
-- **Neural Network Models**: Pre-built MLP and CNN architectures with configurable layers
-- **Dataset Utilities**: Built-in loaders for MNIST and CIFAR-10 with preprocessing
-- **Experiment Tracking**: Comprehensive training loop with metrics tracking and checkpointing
-- **Visualization Tools**: Plot training curves, gradient norms, and compare optimizers
-- **Reproducible Experiments**: JSON configuration files for versioning experiments
-
-## Project Structure
-
-```
-styx/
-├── src/styx/              # Main package
-│   ├── optimizers/        # Custom gradient descent optimizers
-│   ├── models/            # Neural network architectures
-│   ├── datasets/          # Data loading utilities
-│   ├── experiments/       # Training loops and experiment runners
-│   └── visualization/     # Plotting and analysis tools
-├── experiments/           # Experiment configurations and results
-│   ├── configs/          # JSON configuration files
-│   └── results/          # Training outputs and checkpoints
-├── notebooks/            # Jupyter notebooks for exploration
-└── tests/                # Unit tests
+Experimenting with gradient descent for deep learning.
 
 ## Installation
 
@@ -34,7 +8,7 @@ styx/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/styx.git
+git clone https://github.com/calebchin/styx.git
 cd styx
 
 # Create a virtual environment (recommended)
@@ -48,56 +22,9 @@ pip install -e .
 pip install -e ".[dev]"
 ```
 
-### Using requirements.txt
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Quick Start
 
-```python
-import torch
-import torch.nn as nn
-from styx.models import MLP
-from styx.datasets import get_mnist, get_dataloader
-from styx.experiments import Trainer
-from styx.visualization import plot_training_history
-
-# Load dataset
-train_dataset, test_dataset = get_mnist(download=True)
-train_loader = get_dataloader(train_dataset, batch_size=64)
-test_loader = get_dataloader(test_dataset, batch_size=64)
-
-# Create model
-model = MLP(input_dim=784, hidden_dims=[256, 128], output_dim=10)
-
-# Setup training
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-criterion = nn.CrossEntropyLoss()
-
-def accuracy(output, target):
-    pred = output.argmax(dim=1)
-    return (pred == target).float().mean().item()
-
-trainer = Trainer(
-    model=model,
-    optimizer=optimizer,
-    criterion=criterion,
-    device='cuda' if torch.cuda.is_available() else 'cpu',
-    metrics={'accuracy': accuracy}
-)
-
-# Train
-history = trainer.fit(
-    train_loader=train_loader,
-    val_loader=test_loader,
-    epochs=5
-)
-
-# Visualize
-plot_training_history(history)
-```
+Check out [01_quickstart.ipynb](notebooks/01_quickstart.ipynb) for a short example of how to use the modules in styx.  
 
 ## Implementing Custom Optimizers
 
@@ -134,11 +61,6 @@ class MomentumSGD(BaseOptimizer):
 ```bash
 pytest
 ```
-
-## Examples
-
-Check out the [notebooks/](notebooks/) directory for detailed examples:
-- [01_quickstart.ipynb](notebooks/01_quickstart.ipynb) - Basic usage and training
 
 ## Contributing
 
