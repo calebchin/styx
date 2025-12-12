@@ -127,3 +127,82 @@ def get_dataloader(
         num_workers=num_workers,
         pin_memory=pin_memory,
     )
+
+
+def get_mnist_loaders(
+    batch_size: int = 64,
+    data_dir: str = "./data",
+    normalize: bool = True,
+    num_workers: int = 0,
+) -> Tuple[DataLoader, DataLoader]:
+    """Get MNIST train and validation data loaders.
+
+    Args:
+        batch_size: Batch size for data loaders
+        data_dir: Directory to store/load data
+        normalize: Whether to normalize data
+        num_workers: Number of worker processes
+
+    Returns:
+        Tuple of (train_loader, val_loader)
+    """
+    train_dataset, val_dataset = get_mnist(data_dir, download=True, normalize=normalize)
+
+    train_loader = get_dataloader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+    )
+
+    val_loader = get_dataloader(
+        val_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+    )
+
+    return train_loader, val_loader
+
+
+def get_cifar10_loaders(
+    batch_size: int = 64,
+    data_dir: str = "./data",
+    normalize: bool = True,
+    augment_train: bool = False,
+    num_workers: int = 0,
+) -> Tuple[DataLoader, DataLoader]:
+    """Get CIFAR-10 train and validation data loaders.
+
+    Args:
+        batch_size: Batch size for data loaders
+        data_dir: Directory to store/load data
+        normalize: Whether to normalize data
+        augment_train: Whether to apply data augmentation
+        num_workers: Number of worker processes
+
+    Returns:
+        Tuple of (train_loader, val_loader)
+    """
+    train_dataset, val_dataset = get_cifar10(
+        data_dir,
+        download=True,
+        normalize=normalize,
+        augment_train=augment_train,
+    )
+
+    train_loader = get_dataloader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+    )
+
+    val_loader = get_dataloader(
+        val_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+    )
+
+    return train_loader, val_loader
